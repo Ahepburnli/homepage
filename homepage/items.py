@@ -13,3 +13,4 @@ class HomepageItem(scrapy.Item):
     # name = scrapy.Field()
     likeCount = scrapy.Field()
     fansCount = scrapy.Field()
+    pageId = scrapy.Field()

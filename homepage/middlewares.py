@@ -115,3 +115,12 @@ class RandomUserAgentDownloaderMiddleware(object):
         random_ua = random.choice(USER_AGENT_LIST)
         # 把这个ua赋值给请求头
         request.headers['User_Agent'] = random_ua
+
+class ProxyDownloaderMiddleware(object):
+
+    def process_request(self, request, spider):
+
+        # 代理服务器
+        proxy = 'http://47.90.241.78:24000'
+        # 取出对应ip和端口号, 代理地址
+        request.meta['proxy'] = proxy

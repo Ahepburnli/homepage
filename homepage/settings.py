@@ -35,7 +35,7 @@ RANDOMIZE_DOWNLOAD_DELAY = True  # 使DOWNLOAD_DELAY在0.5-1.5倍之间随机取
 # CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-# COOKIES_ENABLED = False
+COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 # TELNETCONSOLE_ENABLED = False
@@ -60,6 +60,7 @@ DEFAULT_REQUEST_HEADERS = {
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
    'homepage.middlewares.RandomUserAgentDownloaderMiddleware': 543,
+   'homepage.middlewares.ProxyDownloaderMiddleware': 553,
 }
 
 # Enable or disable extensions
@@ -97,11 +98,18 @@ ITEM_PIPELINES = {
 
 
 # 配置mysql
-MYSQL_HOST = 'shopifydata.cq1s6mjfadcw.us-east-1.rds.amazonaws.com'
+# MYSQL_HOST = 'shopifydata.cq1s6mjfadcw.us-east-1.rds.amazonaws.com'
+# MYSQL_PORT = 3306
+# MYSQL_DB = 'facebook'
+# MYSQL_USER = 'morningfast'
+# MYSQL_PASSWORD = 'morningfast999'
+# MYSQL_CHARSET = 'utf8mb4'
+
+MYSQL_HOST = 'localhost'
 MYSQL_PORT = 3306
 MYSQL_DB = 'facebook'
-MYSQL_USER = 'morningfast'
-MYSQL_PASSWORD = 'morningfast999'
+MYSQL_USER = 'root'
+MYSQL_PASSWORD = 'lky'
 MYSQL_CHARSET = 'utf8mb4'
 
 # 设置日志

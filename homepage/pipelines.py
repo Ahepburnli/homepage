@@ -6,6 +6,8 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 from pymysql import *
+import logging
+from scrapy.exceptions import DropItem
 
 from homepage.settings import MYSQL_HOST, MYSQL_PORT, MYSQL_DB, MYSQL_USER, MYSQL_PASSWORD, MYSQL_CHARSET
 
@@ -19,13 +21,18 @@ class HomepagePipeline(object):
 
     def process_item(self, item, spider):
         if spider.name == 'home':
-            sql = 'update fb_homepage set likeCount=%s, fansCount=%s'
+            if item['pageId'] == '':
+                raise DropItem("----------pageId is ''----------")
+
+            sql = 'update fb_homepage set likeCount=%s, fansCount=%s where pageId=%s'
             self.conn.ping(reconnect=True)
-            self.cs1.execute(sql, (item['likeCount'], item['fansCount']))
+            self.cs1.execute(sql, (item['likeCount'], item['fansCount'], item['pageId']))
+            logging.debug('update likecount------------%s' % item['likeCount'])
+            logging.debug('update fansCount------------%s' % item['fansCount'])
             self.conn.commit()  # 提交操作
         return item
 
-    def close_spider(self,spider):
+    def close_spider(self, spider):
         if spider.name == 'home':
             # 关闭游标和连接
             self.cs1.close()
